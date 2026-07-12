@@ -18,12 +18,12 @@ export default function MainLayout() {
         <Navbar onMenuClick={() => setIsMobileOpen(true)} />
 
         {/* Viewport Content */}
-        <main className="flex-1 overflow-y-auto p-6 md:p-8">
+        <main className="flex-1 overflow-y-auto p-4 md:p-6">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="max-w-7xl mx-auto space-y-6"
+            className="max-w-[1600px] mx-auto space-y-5"
           >
             <Outlet />
           </motion.div>

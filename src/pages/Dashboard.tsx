@@ -136,25 +136,25 @@ export default function Dashboard() {
                 Quick Actions
               </h3>
               <div className="grid grid-cols-2 gap-3">
-                <button className="flex flex-col items-center justify-center p-3 rounded-lg border border-border bg-muted/20 text-foreground hover:bg-muted transition-all text-center gap-2 group cursor-pointer shadow-premium">
+                <button className="flex flex-col items-center justify-center p-3 rounded-lg border border-border bg-card text-foreground hover:bg-muted/40 hover:scale-[1.02] hover:-translate-y-0.5 transition-all duration-300 text-center gap-2 group cursor-pointer shadow-premium">
                   <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:scale-110 transition-transform">
                     <PlusCircle className="w-5 h-5" />
                   </div>
                   <span className="text-xs font-semibold">New Asset</span>
                 </button>
-                <button className="flex flex-col items-center justify-center p-3 rounded-lg border border-border bg-muted/20 text-foreground hover:bg-muted transition-all text-center gap-2 group cursor-pointer shadow-premium">
+                <button className="flex flex-col items-center justify-center p-3 rounded-lg border border-border bg-card text-foreground hover:bg-muted/40 hover:scale-[1.02] hover:-translate-y-0.5 transition-all duration-300 text-center gap-2 group cursor-pointer shadow-premium">
                   <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:scale-110 transition-transform">
                     <ArrowLeftRight className="w-5 h-5" />
                   </div>
                   <span className="text-xs font-semibold">Transfer</span>
                 </button>
-                <button className="flex flex-col items-center justify-center p-3 rounded-lg border border-border bg-muted/20 text-foreground hover:bg-muted transition-all text-center gap-2 group cursor-pointer shadow-premium">
+                <button className="flex flex-col items-center justify-center p-3 rounded-lg border border-border bg-card text-foreground hover:bg-muted/40 hover:scale-[1.02] hover:-translate-y-0.5 transition-all duration-300 text-center gap-2 group cursor-pointer shadow-premium">
                   <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:scale-110 transition-transform">
                     <Wrench className="w-5 h-5" />
                   </div>
                   <span className="text-xs font-semibold">Maintenance</span>
                 </button>
-                <button className="flex flex-col items-center justify-center p-3 rounded-lg border border-border bg-muted/20 text-foreground hover:bg-muted transition-all text-center gap-2 group cursor-pointer shadow-premium">
+                <button className="flex flex-col items-center justify-center p-3 rounded-lg border border-border bg-card text-foreground hover:bg-muted/40 hover:scale-[1.02] hover:-translate-y-0.5 transition-all duration-300 text-center gap-2 group cursor-pointer shadow-premium">
                   <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:scale-110 transition-transform">
                     <Calendar className="w-5 h-5" />
                   </div>
@@ -164,15 +164,15 @@ export default function Dashboard() {
             </div>
 
             {/* AI Insights Card */}
-            <div className="p-6 rounded-xl border border-border bg-card shadow-premium select-none space-y-4 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl" />
+            <div className="p-6 rounded-xl border border-primary/20 bg-primary/[0.02] dark:bg-primary/[0.01] shadow-premium select-none space-y-4 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-primary/10 rounded-full blur-2xl" />
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold text-sm text-foreground tracking-tight uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
                   <Lightbulb className="w-4 h-4 text-amber-500 animate-pulse" />
                   <span>AI Insights</span>
                 </h3>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-primary/10 text-primary flex items-center gap-1">
-                  <Sparkles className="w-3 h-3" />
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-primary/15 text-primary flex items-center gap-1">
+                  <Sparkles className="w-3 h-3 text-primary" />
                   Insight Engine
                 </span>
               </div>
@@ -180,9 +180,9 @@ export default function Dashboard() {
                 {data.aiInsights.map((insight) => (
                   <div
                     key={insight.id}
-                    className="p-2.5 rounded-lg border border-border bg-muted/30 text-xs flex gap-2 items-start hover:bg-muted/50 transition-colors"
+                    className="p-2.5 rounded-lg border border-primary/10 bg-card text-xs flex gap-2 items-start hover:border-primary/20 hover:scale-[1.01] transition-all duration-200 shadow-premium"
                   >
-                    <span className="text-amber-500 shrink-0 mt-0.5">✨</span>
+                    <span className="text-primary shrink-0 mt-0.5">✨</span>
                     <p className="text-muted-foreground leading-relaxed text-[11px]">
                       {insight.message}
                     </p>

@@ -32,7 +32,7 @@ export default function MetricCard({ title, value, icon, trend, loading, classNa
   }
 
   return (
-    <div className={cn("p-6 rounded-xl border border-border bg-card shadow-premium flex flex-col justify-between shadow-card-hover", className)}>
+    <div className={cn("p-6 rounded-xl border border-border bg-card shadow-premium flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] hover:-translate-y-0.5 hover:shadow-md cursor-pointer select-none", className)}>
       <div className="flex items-center justify-between">
         <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{title}</span>
         {icon && <div className="text-muted-foreground/80 bg-muted/60 p-2 rounded-lg">{icon}</div>}
