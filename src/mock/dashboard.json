@@ -1,0 +1,201 @@
+{
+  "welcome": {
+    "userName": "Shreyansh",
+    "role": "Enterprise Administrator",
+    "alertCount": 3,
+    "systemStatus": "Healthy"
+  },
+  "kpis": [
+    {
+      "key": "total_assets",
+      "title": "Total Assets Managed",
+      "value": "1,248",
+      "trend": {
+        "value": 12.4,
+        "label": "vs last quarter",
+        "isPositive": true
+      }
+    },
+    {
+      "key": "allocated_assets",
+      "title": "Active Allocations",
+      "value": "942",
+      "trend": {
+        "value": 8.5,
+        "label": "vs last month",
+        "isPositive": true
+      }
+    },
+    {
+      "key": "maintenance_assets",
+      "title": "Under Maintenance",
+      "value": "42",
+      "trend": {
+        "value": 5.2,
+        "label": "vs last week",
+        "isPositive": false
+      }
+    },
+    {
+      "key": "pending_audits",
+      "title": "Pending Audits",
+      "value": "6",
+      "trend": {
+        "value": 0,
+        "label": "due in 3 days",
+        "isPositive": true
+      }
+    }
+  ],
+  "assetHealth": {
+    "excellent": 845,
+    "good": 310,
+    "fair": 75,
+    "critical": 18
+  },
+  "utilization": [
+    { "name": "IT Hardware", "value": 88 },
+    { "name": "Meeting Rooms", "value": 72 },
+    { "name": "Lab Equipment", "value": 91 },
+    { "name": "Mobile Devices", "value": 64 },
+    { "name": "Software Licenses", "value": 95 }
+  ],
+  "departmentUsage": [
+    { "department": "Engineering", "assets": 480, "cost": 120000 },
+    { "department": "Design", "assets": 195, "cost": 65000 },
+    { "department": "Sales & Mktg", "assets": 210, "cost": 45000 },
+    { "department": "Operations", "assets": 265, "cost": 55000 },
+    { "department": "HR & Admin", "assets": 98, "cost": 22000 }
+  ],
+  "activity": [
+    {
+      "id": "act-1",
+      "title": "Asset Allocation Approved",
+      "subtitle": "MacBook Pro M3 Max assigned to Shreyansh",
+      "description": "Inventory ID: AST-2026-0043",
+      "date": "10 mins ago",
+      "status": "success"
+    },
+    {
+      "id": "act-2",
+      "title": "Maintenance Ticket Logged",
+      "subtitle": "Critical hardware failure reported",
+      "description": "Dell XPS Monitor in Conference Room B - Screen flicker issues",
+      "date": "1 hour ago",
+      "status": "danger"
+    },
+    {
+      "id": "act-3",
+      "title": "Transfer Request Initiated",
+      "subtitle": "iPad Pro transfer from Design to Marketing",
+      "description": "Requested by Sarah Jenkins, pending approval",
+      "date": "2 hours ago",
+      "status": "primary"
+    },
+    {
+      "id": "act-4",
+      "title": "Audit Checklist Completed",
+      "subtitle": "Quarterly physical asset inspection",
+      "description": "Operations department verification complete - 98.4% accuracy",
+      "date": "1 day ago",
+      "status": "success"
+    },
+    {
+      "id": "act-5",
+      "title": "Warranty Renewed",
+      "subtitle": "Server Rack B Cisco Switches",
+      "description": "Contract extended with Cisco Systems until Dec 2028",
+      "date": "2 days ago",
+      "status": "secondary"
+    }
+  ],
+  "upcomingReturns": [
+    {
+      "id": "ret-1",
+      "assetName": "ThinkPad Carbon X1",
+      "tag": "AST-0922",
+      "employee": "Aarav Sharma",
+      "dueDate": "Today, 5:00 PM",
+      "status": "overdue"
+    },
+    {
+      "id": "ret-2",
+      "assetName": "Testing Device - Pixel 8 Pro",
+      "tag": "AST-1244",
+      "employee": "Jessica Taylor",
+      "dueDate": "Tomorrow",
+      "status": "pending"
+    },
+    {
+      "id": "ret-3",
+      "assetName": "Wacom Cintiq Pro 24",
+      "tag": "AST-0419",
+      "employee": "Marcus Chen",
+      "dueDate": "July 15, 2026",
+      "status": "pending"
+    }
+  ],
+  "pendingMaintenance": [
+    {
+      "id": "maint-1",
+      "assetName": "Server Room AC Unit 2",
+      "tag": "FAC-049",
+      "priority": "critical",
+      "issue": "Cooling efficiency dropped by 30%",
+      "technician": "John Doe"
+    },
+    {
+      "id": "maint-2",
+      "assetName": "HP LaserJet Pro Enterprise",
+      "tag": "PRN-012",
+      "priority": "medium",
+      "issue": "Fuser assembly jam and printing streaks",
+      "technician": "Jane Smith"
+    },
+    {
+      "id": "maint-3",
+      "assetName": "Oculus Quest 3 (QA)",
+      "tag": "AST-288",
+      "priority": "low",
+      "issue": "Controller tracking loses connection intermittently",
+      "technician": "Alex Mercer"
+    }
+  ],
+  "pendingTransfers": [
+    {
+      "id": "trf-1",
+      "assetName": "iPhone 15 Pro Max",
+      "tag": "AST-1002",
+      "fromDepartment": "Quality Assurance",
+      "toDepartment": "Product Design",
+      "requester": "David Vance",
+      "date": "July 10, 2026"
+    },
+    {
+      "id": "trf-2",
+      "assetName": "Mac Studio M2 Ultra",
+      "tag": "AST-0054",
+      "fromDepartment": "Video Engineering",
+      "toDepartment": "Social Media Team",
+      "requester": "Sofia Rossi",
+      "date": "July 12, 2026"
+    }
+  ],
+  "aiInsights": [
+    {
+      "id": "ins-1",
+      "type": "warning",
+      "message": "Predictive maintenance alert: 12 office chairs in Eng block are reaching warranty expiration. Plan audit to check structural wear."
+    },
+    {
+      "id": "ins-2",
+      "type": "optimization",
+      "message": "IT Hardware booking audit: Mobile dev testing kits show 92% utilization. Recommend ordering 2 additional iOS kits next quarter."
+    },
+    {
+      "id": "ins-3",
+      "type": "cost",
+      "message": "License management: 15 Figma Enterprise seats have been inactive for over 60 days. Deprovisioning could save $675 monthly."
+    }
+  ]
+}
