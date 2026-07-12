@@ -1,0 +1,147 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Role {
+  id    Int    @id @default(autoincrement())
+  name  String @unique // Admin, Asset Manager, Department Head, Employee
+  users User[]
+}
+
+model Department {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  users     User[]
+  assets    Asset[]
+}
+
+model Category {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  assets Asset[]
+}
+
+model User {
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  email              String               @unique
+  password           String
+  roleId             Int
+  departmentId       Int?
+  role               Role                 @relation(fields: [roleId], references: [id])
+  department         Department?          @relation(fields: [departmentId], references: [id])
+  allocations        AssetAllocation[]
+  bookings           Booking[]
+  activityLogs       ActivityLog[]
+  maintenanceReqs    MaintenanceRequest[]
+  transfersFrom      TransferRequest[]    @relation("TransferFrom")
+  transfersTo        TransferRequest[]    @relation("TransferTo")
+  notifications      Notification[]
+}
+
+model Asset {
+  id               Int                  @id @default(autoincrement())
+  name             String
+  assetCode        String               @unique
+  serialNumber     String               @unique
+  status           String               // Available, Allocated, Reserved, Under Maintenance, Lost, Retired, Disposed
+  categoryId       Int
+  departmentId     Int
+  category         Category             @relation(fields: [categoryId], references: [id])
+  department       Department           @relation(fields: [departmentId], references: [id])
+  allocations      AssetAllocation[]
+  bookings         Booking[]
+  maintenanceReqs  MaintenanceRequest[]
+  auditItems       AuditItem[]
+  transferRequests TransferRequest[]
+}
+
+model AssetAllocation {
+  id           Int       @id @default(autoincrement())
+  assetId      Int
+  userId       Int
+  allocatedAt  DateTime  @default(now())
+  returnedAt   DateTime?
+  status       String    // Active, Returned
+  asset        Asset     @relation(fields: [assetId], references: [id])
+  user         User      @relation(fields: [userId], references: [id])
+}
+
+model TransferRequest {
+  id           Int      @id @default(autoincrement())
+  assetId      Int
+  fromUserId   Int
+  toUserId     Int
+  status       String   // Pending, Approved, Rejected
+  requestedAt  DateTime @default(now())
+  resolvedAt   DateTime?
+  asset        Asset    @relation(fields: [assetId], references: [id])
+  fromUser     User     @relation("TransferFrom", fields: [fromUserId], references: [id])
+  toUser       User     @relation("TransferTo", fields: [toUserId], references: [id])
+}
+
+model Booking {
+  id           Int      @id @default(autoincrement())
+  assetId      Int
+  userId       Int
+  startDate    DateTime
+  endDate      DateTime
+  status       String   // Active, Completed, Cancelled
+  asset        Asset    @relation(fields: [assetId], references: [id])
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model MaintenanceRequest {
+  id           Int      @id @default(autoincrement())
+  assetId      Int
+  requestedBy  Int
+  issue        String
+  status       String   // Pending, Approved, Rejected, Resolved
+  requestedAt  DateTime @default(now())
+  resolvedAt   DateTime?
+  asset        Asset    @relation(fields: [assetId], references: [id])
+  user         User     @relation(fields: [requestedBy], references: [id])
+}
+
+model AuditCycle {
+  id           Int         @id @default(autoincrement())
+  name         String
+  startDate    DateTime
+  endDate      DateTime?
+  status       String      // Open, Closed
+  items        AuditItem[]
+}
+
+model AuditItem {
+  id           Int         @id @default(autoincrement())
+  auditCycleId Int
+  assetId      Int
+  status       String      // Verified, Missing, Lost
+  verifiedAt   DateTime?
+  auditCycle   AuditCycle  @relation(fields: [auditCycleId], references: [id])
+  asset        Asset       @relation(fields: [assetId], references: [id])
+}
+
+model Notification {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  message      String
+  isRead       Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model ActivityLog {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  action       String
+  entity       String
+  entityId     Int
+  timestamp    DateTime @default(now())
+  user         User     @relation(fields: [userId], references: [id])
+}
