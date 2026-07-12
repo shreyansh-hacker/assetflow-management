@@ -1,0 +1,49 @@
+{
+  "kpis": {
+    "totalValue": 78450,
+    "depreciatedValue": 52190,
+    "activeUtilizationRate": 92.4,
+    "maintenanceCosts": 2340,
+    "auditCompletionPercent": 75.0
+  },
+  "utilizationByDepartment": [
+    { "department": "Engineering", "allocated": 48, "total": 52, "percentage": 92 },
+    { "department": "Product & Design", "allocated": 14, "total": 15, "percentage": 93 },
+    { "department": "Sales & Marketing", "allocated": 20, "total": 22, "percentage": 90 },
+    { "department": "Operations & Supply", "allocated": 28, "total": 30, "percentage": 93 },
+    { "department": "Human Resources", "allocated": 8, "total": 10, "percentage": 80 }
+  ],
+  "maintenanceCostTrends": [
+    { "month": "Jan 2026", "preventative": 250, "corrective": 400, "total": 650 },
+    { "month": "Feb 2026", "preventative": 300, "corrective": 120, "total": 420 },
+    { "month": "Mar 2026", "preventative": 280, "corrective": 680, "total": 960 },
+    { "month": "Apr 2026", "preventative": 350, "corrective": 220, "total": 570 },
+    { "month": "May 2026", "preventative": 300, "corrective": 180, "total": 480 },
+    { "month": "Jun 2026", "preventative": 450, "corrective": 550, "total": 1000 }
+  ],
+  "depreciationSummary": [
+    { "category": "IT Hardware", "originalCost": 35000, "depreciatedValue": 24000 },
+    { "category": "Office Furniture", "originalCost": 12000, "depreciatedValue": 9800 },
+    { "category": "Lab Equipment", "originalCost": 15000, "depreciatedValue": 10500 },
+    { "category": "Software Licenses", "originalCost": 12000, "depreciatedValue": 7890 },
+    { "category": "Mobile Devices", "originalCost": 4450, "depreciatedValue": 0 }
+  ],
+  "bookingHeatmap": [
+    { "day": "Mon", "slotsBooked": 12 },
+    { "day": "Tue", "slotsBooked": 18 },
+    { "day": "Wed", "slotsBooked": 22 },
+    { "day": "Thu", "slotsBooked": 15 },
+    { "day": "Fri", "slotsBooked": 8 }
+  ],
+  "lifecycleOverview": [
+    { "stage": "Procured", "value": 15 },
+    { "stage": "Allocated", "value": 72 },
+    { "stage": "In Maintenance", "value": 8 },
+    { "stage": "Disposed / Recycled", "value": 5 }
+  ],
+  "recentReports": [
+    { "id": "REP-01", "title": "Q2 Capital Depreciation Assessment", "date": "2026-07-01", "type": "financial" },
+    { "id": "REP-02", "title": "SLA & Calibration Breach logs", "date": "2026-06-25", "type": "maintenance" },
+    { "id": "REP-03", "title": "Asset Headcount Verification Summary", "date": "2026-06-12", "type": "compliance" }
+  ]
+}

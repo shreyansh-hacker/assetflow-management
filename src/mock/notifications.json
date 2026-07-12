@@ -1,0 +1,47 @@
+[
+  {
+    "id": "NOT-001",
+    "title": "Battery Swelling Hazard Flagged",
+    "message": "Asset MacBook Pro M3 Max (AF-LP-0043) has been marked critical. Physical inspection indicates battery swelling. Instantly decommissioned.",
+    "category": "maintenance",
+    "priority": "critical",
+    "isRead": false,
+    "createdAt": "2026-07-12 11:30"
+  },
+  {
+    "id": "NOT-002",
+    "title": "Transfer Request Pending Approval",
+    "message": "Sarah Jenkins requested custody transfer for MacBook Pro (AF-LP-0043) from Shreyansh. Requires VP Engineering verification.",
+    "category": "transfer",
+    "priority": "medium",
+    "isRead": false,
+    "createdAt": "2026-07-12 10:45"
+  },
+  {
+    "id": "NOT-003",
+    "title": "Calibration Certificate Expired",
+    "message": "Keysight Oscilloscope DSOX2002A (AF-LB-0088) calibration certificate has expired. Device locked for safety calibration checkups.",
+    "category": "audit",
+    "priority": "high",
+    "isRead": false,
+    "createdAt": "2026-07-11 09:00"
+  },
+  {
+    "id": "NOT-004",
+    "title": "Meeting Room Reserved",
+    "message": "Conference Room Alpha successfully booked by Shreyansh for 2026-07-12 from 09:00 to 11:00.",
+    "category": "booking",
+    "priority": "low",
+    "isRead": true,
+    "createdAt": "2026-07-12 08:30"
+  },
+  {
+    "id": "NOT-005",
+    "title": "Asset Relocation Approved",
+    "message": "Herman Miller Aeron Chair location discrepancy resolved. Expected coordinate index set to HQ - Room 401.",
+    "category": "audit",
+    "priority": "low",
+    "isRead": true,
+    "createdAt": "2026-07-10 14:22"
+  }
+]
