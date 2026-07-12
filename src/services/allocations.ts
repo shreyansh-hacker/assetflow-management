@@ -1,116 +1,69 @@
-import { simulateApiDelay } from "@/services/api"
-import type { TransferRequest, CustodyHistory, TransferStatusType } from "@/types/allocations"
-import {
-  getAllocationsDb,
-  updateAllocationsDb,
-  getAssetsDb,
-  updateAssetsDb,
-  createSystemNotification,
-} from "./db"
-import type { AssetHistoryEvent } from "@/types/assets"
+import { api, simulateApiDelay } from "@/services/api"
+import type { TransferRequest, CustodyHistory } from "@/types/allocations"
+import { adaptTransferRequest } from "./adapters"
 
 export const getTransferRequests = async (): Promise<TransferRequest[]> => {
   await simulateApiDelay()
-  return getAllocationsDb()
+  const response = await api.get("/transfer")
+  if (response.data.success) {
+    return response.data.data.map(adaptTransferRequest)
+  }
+  return []
 }
 
 export const getCustodyHistory = async (): Promise<CustodyHistory[]> => {
   await simulateApiDelay()
-  const assets = getAssetsDb()
+  // Generate custody history list by aggregating transfers and allocations
+  const response = await api.get("/transfer")
   const history: CustodyHistory[] = []
-  assets.forEach((asset) => {
-    asset.history.forEach((h) => {
-      if (h.type === "allocation") {
+  if (response.data.success) {
+    response.data.data.forEach((t: any) => {
+      if (t.status === "Approved") {
         history.push({
-          id: h.id.toString(),
-          assetId: asset.id,
-          event: "Reassigned" as const,
-          from: "Previous Holder",
-          to: h.user,
-          date: h.date,
-          user: h.user,
+          id: `cust-${t.id}`,
+          assetId: `AST-${String(t.assetId).padStart(4, "0")}`,
+          event: "Reassigned",
+          from: t.fromUser?.name || "Previous Holder",
+          to: t.toUser?.name || "New Holder",
+          date: (t.resolvedAt || t.requestedAt || new Date().toISOString()).split("T")[0],
+          user: t.toUser?.name || "System"
         })
       }
     })
-  })
+  }
   return history
 }
 
 export const createTransferRequest = async (request: Omit<TransferRequest, "id" | "requestDate" | "status">): Promise<TransferRequest> => {
-  await simulateApiDelay()
-  const currentAlloc = getAllocationsDb()
-  const newRequestDb: TransferRequest = {
-    ...request,
-    id: "TR-" + (Math.round(Math.random() * 1000) + 1000).toString(),
-    status: "pending" as TransferStatusType,
-    requestDate: new Date().toISOString().split("T")[0],
+  const assetId = parseInt(request.assetId.replace("AST-", ""))
+  
+  // Find employee id by looking up employee name or select default
+  // Since we don't have user dropdown search easily in client, let's select user 1 or parse it from database
+  // Actually, we can fetch all employees first to map newHolder name to user ID!
+  const empResponse = await api.get("/employees")
+  let toUserId = 1
+  if (empResponse.data.success) {
+    const match = empResponse.data.data.find(
+      (e: any) => e.name.toLowerCase() === request.newHolder.toLowerCase()
+    )
+    if (match) toUserId = match.id
   }
 
-  updateAllocationsDb([newRequestDb, ...currentAlloc])
+  const response = await api.post("/transfer", {
+    assetId,
+    toUserId,
+    reason: request.reason
+  })
 
-  createSystemNotification(
-    `Transfer Request Raised for ${request.assetName}`,
-    `${request.currentHolder} requested transfer to ${request.newHolder} in ${request.newDepartment}.`,
-    "transfer",
-    "medium"
-  )
-
-  return newRequestDb
+  return adaptTransferRequest(response.data.data)
 }
 
 export const approveTransfer = async (requestId: string): Promise<void> => {
-  await simulateApiDelay()
-  const currentAlloc = getAllocationsDb()
-  const match = currentAlloc.find((a) => a.id === requestId)
-  if (!match) return
-
-  match.status = "approved"
-  updateAllocationsDb([...currentAlloc])
-
-  const assets = getAssetsDb()
-  const asset = assets.find((a) => a.id === match.assetId)
-  if (asset) {
-    const prevHolder = asset.assignedTo ? asset.assignedTo.name : "Unassigned"
-    asset.assignedTo = {
-      name: match.newHolder,
-      email: `${match.newHolder.toLowerCase().replace(/\s+/g, ".")}@assetflow.com`,
-    }
-    asset.department = match.newDepartment
-    asset.status = "allocated"
-
-    const hist: AssetHistoryEvent = {
-      id: "hist-" + Date.now().toString(),
-      type: "allocation",
-      title: "Custody Transferred",
-      date: new Date().toISOString().split("T")[0],
-      user: match.newHolder,
-      notes: `Transferred from ${prevHolder} to ${match.newHolder} (Dept: ${match.newDepartment}). Reason: ${match.reason}`,
-    }
-    asset.history = [hist, ...asset.history]
-    updateAssetsDb([...assets])
-  }
-
-  createSystemNotification(
-    `Transfer Request Approved: ${match.assetName}`,
-    `Asset transferred successfully to ${match.newHolder} (${match.newDepartment}).`,
-    "transfer",
-    "low"
-  )
+  const transferId = parseInt(requestId.replace("TR-", ""))
+  await api.put(`/transfer/${transferId}/approve`)
 }
 
 export const rejectTransfer = async (requestId: string): Promise<void> => {
-  await simulateApiDelay()
-  const currentAlloc = getAllocationsDb()
-  const match = currentAlloc.find((a) => a.id === requestId)
-  if (!match) return
-
-  match.status = "rejected"
-  updateAllocationsDb([...currentAlloc])
-
-  createSystemNotification(
-    `Transfer Request Rejected: ${match.assetName}`,
-    `Transfer custody request for ${match.newHolder} was rejected.`,
-    "transfer",
-    "low"
-  )
+  const transferId = parseInt(requestId.replace("TR-", ""))
+  await api.put(`/transfer/${transferId}/reject`)
 }

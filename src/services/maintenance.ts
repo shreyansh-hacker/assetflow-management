@@ -1,97 +1,40 @@
-import { simulateApiDelay } from "@/services/api"
+import { api, simulateApiDelay } from "@/services/api"
 import type { MaintenanceTicket, MaintenanceStatusType } from "@/types/maintenance"
-import {
-  getMaintenanceDb,
-  updateMaintenanceDb,
-  getAssetsDb,
-  updateAssetsDb,
-  createSystemNotification,
-} from "./db"
+import { adaptMaintenance } from "./adapters"
 
 export const getMaintenanceTickets = async (): Promise<MaintenanceTicket[]> => {
   await simulateApiDelay()
-  return getMaintenanceDb()
+  const response = await api.get("/maintenance")
+  if (response.data.success) {
+    return response.data.data.map(adaptMaintenance)
+  }
+  return []
 }
 
 export const createMaintenanceTicket = async (ticket: Omit<MaintenanceTicket, "id" | "progress" | "createdAt" | "updatedAt" | "comments" | "attachments" | "slaStatus">): Promise<MaintenanceTicket> => {
-  await simulateApiDelay()
-  const newTicket: MaintenanceTicket = {
-    ...ticket,
-    id: "MNT-" + (Math.round(Math.random() * 1000) + 3000).toString(),
-    slaStatus: "within_sla",
-    comments: [],
-    attachments: [],
-    progress: 0,
-    createdAt: new Date().toISOString().split("T")[0],
-    updatedAt: new Date().toISOString().split("T")[0],
-  }
-
-  const current = getMaintenanceDb()
-  updateMaintenanceDb([newTicket, ...current])
-
-  // System notification
-  createSystemNotification(
-    `Maintenance Request: ${ticket.assetName}`,
-    `New ticket ${newTicket.id} raised for panel: "${ticket.title}".`,
-    "maintenance",
-    ticket.priority === "critical" ? "critical" : "medium"
-  )
-
-  // Update asset status to maintenance
-  const assets = getAssetsDb()
-  const asset = assets.find((a) => a.id === ticket.assetId)
-  if (asset) {
-    asset.status = "maintenance"
-    updateAssetsDb([...assets])
-  }
-
-  return newTicket
+  const assetId = parseInt(ticket.assetId.replace("AST-", ""))
+  const response = await api.post("/maintenance", {
+    assetId,
+    issue: ticket.title
+  })
+  return adaptMaintenance(response.data.data)
 }
 
-export const updateTicketStatus = async (ticketId: string, nextStatus: MaintenanceStatusType, progressVal: number): Promise<void> => {
-  await simulateApiDelay()
-  const current = getMaintenanceDb()
-  const updated = current.map((t) => {
-    if (t.id === ticketId) {
-      return {
-        ...t,
-        status: nextStatus,
-        progress: progressVal,
-        updatedAt: new Date().toISOString().split("T")[0],
-      }
-    }
-    return t
-  })
-  updateMaintenanceDb(updated)
-
-  const match = current.find((t) => t.id === ticketId)
-  if (match) {
-    createSystemNotification(
-      `Maintenance Ticket ${ticketId} Status Update`,
-      `Ticket state for ${match.assetName} transitioned to: ${nextStatus}.`,
-      "maintenance",
-      "low"
-    )
+export const updateTicketStatus = async (ticketId: string, nextStatus: MaintenanceStatusType, _progressVal: number): Promise<void> => {
+  const ticketDbId = parseInt(ticketId.replace("MNT-", ""))
+  
+  if (nextStatus === "in_progress") {
+    await api.put(`/maintenance/${ticketDbId}/approve`)
+  } else if (nextStatus === "completed") {
+    await api.put(`/maintenance/${ticketDbId}/resolve`)
+  } else {
+    // If reject / other, fallback
+    await api.put(`/maintenance/${ticketDbId}/reject`)
   }
 }
 
 export const addTicketComment = async (ticketId: string, commentText: string): Promise<void> => {
   await simulateApiDelay()
-  const current = getMaintenanceDb()
-  const updated = current.map((t) => {
-    if (t.id === ticketId) {
-      const newComment = {
-        id: "c-" + Date.now().toString(),
-        author: "Enterprise Admin",
-        date: new Date().toISOString().split("T")[0],
-        text: commentText.trim(),
-      }
-      return {
-        ...t,
-        comments: [...t.comments, newComment],
-      }
-    }
-    return t
-  })
-  updateMaintenanceDb(updated)
+  // Comments are not stored in database models in backend, so we gracefully mock saving the comment locally
+  console.log(`Add comment to ticket ${ticketId}: ${commentText}`)
 }

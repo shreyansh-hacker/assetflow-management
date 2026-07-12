@@ -1,22 +1,21 @@
-import { simulateApiDelay } from "@/services/api"
+import { api, simulateApiDelay } from "@/services/api"
 import type { NotificationItem } from "@/types/notifications"
-import { getNotificationsDb, updateNotificationsDb } from "./db"
+import { adaptNotification } from "./adapters"
 
 export const getNotifications = async (): Promise<NotificationItem[]> => {
   await simulateApiDelay()
-  return getNotificationsDb()
+  const response = await api.get("/notifications")
+  if (response.data.success) {
+    return response.data.data.map(adaptNotification)
+  }
+  return []
 }
 
 export const markNotificationRead = async (id: string): Promise<void> => {
-  await simulateApiDelay()
-  const current = getNotificationsDb()
-  const updated = current.map((n) => (n.id === id ? { ...n, isRead: true } : n))
-  updateNotificationsDb(updated)
+  const notificationId = parseInt(id.replace("NOT-", ""))
+  await api.put(`/notifications/${notificationId}/read`)
 }
 
 export const markAllNotificationsRead = async (): Promise<void> => {
-  await simulateApiDelay()
-  const current = getNotificationsDb()
-  const updated = current.map((n) => ({ ...n, isRead: true }))
-  updateNotificationsDb(updated)
+  await api.put("/notifications/read-all")
 }

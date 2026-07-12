@@ -1,7 +1,10 @@
 import { Sun, Moon, Bell, Search, Menu } from "lucide-react"
 import { useTheme } from "@/hooks/useTheme"
-import { useLocation } from "react-router-dom"
+import { useLocation, Link, useNavigate } from "react-router-dom"
 import { ROUTES } from "@/constants/routes"
+import { useAuth } from "@/contexts/AuthContext"
+import { useQuery } from "@tanstack/react-query"
+import { getNotifications } from "@/services/notifications"
 
 type NavbarProps = {
   onMenuClick: () => void
@@ -9,7 +12,17 @@ type NavbarProps = {
 
 export default function Navbar({ onMenuClick }: NavbarProps) {
   const { theme, setTheme } = useTheme()
+  const { user } = useAuth()
   const location = useLocation()
+  const navigate = useNavigate()
+
+  const { data: notifications = [] } = useQuery({
+    queryKey: ["notifications"],
+    queryFn: getNotifications,
+    refetchInterval: 15000, // Refetch every 15 seconds to sync dashboard/realtime alerts
+  })
+
+  const unreadCount = notifications.filter((n) => !n.isRead).length
 
   // Dynamic breadcrumb generation
   const getBreadcrumbName = (path: string) => {
@@ -43,6 +56,10 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
     setTheme(theme === "dark" ? "light" : "dark")
   }
 
+  const userInitials = user?.name 
+    ? user.name.split(" ").map(n => n[0]).join("").toUpperCase().substring(0, 2)
+    : "US"
+
   return (
     <header className="h-16 border-b border-border bg-card text-card-foreground flex items-center justify-between px-6 sticky top-0 z-20 select-none">
       {/* Left side: Mobile menu trigger & Breadcrumb */}
@@ -55,9 +72,9 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
         </button>
 
         <div className="flex items-center gap-2 text-sm font-medium">
-          <span className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
+          <Link to="/" className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
             AssetFlow
-          </span>
+          </Link>
           <span className="text-muted-foreground/50">/</span>
           <span className="text-foreground font-semibold">
             {getBreadcrumbName(location.pathname)}
@@ -91,22 +108,28 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
         </button>
 
         {/* Notification bell button */}
-        <button
-          className="p-2 rounded-lg hover:bg-muted text-foreground relative transition-colors shadow-premium border border-border cursor-pointer"
+        <Link
+          to={ROUTES.NOTIFICATIONS}
+          className="p-2 rounded-lg hover:bg-muted text-foreground relative transition-colors shadow-premium border border-border cursor-pointer flex items-center justify-center"
           aria-label="View notifications"
         >
           <Bell className="w-4 h-4" />
-          <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-destructive" />
-        </button>
+          {unreadCount > 0 && (
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-red-500 flex items-center justify-center text-[7px] text-white font-bold" />
+          )}
+        </Link>
 
         {/* Vertical divider */}
         <div className="h-6 w-px bg-border hidden sm:block" />
 
         {/* Mini user profile badge */}
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-xs shadow-sm cursor-pointer select-none">
-            EA
-          </div>
+          <button
+            onClick={() => navigate(ROUTES.SETTINGS)}
+            className="w-8 h-8 rounded-full bg-primary/10 hover:bg-primary/20 text-primary flex items-center justify-center font-bold text-xs shadow-sm cursor-pointer select-none transition-colors uppercase border border-primary/20"
+          >
+            {userInitials}
+          </button>
         </div>
       </div>
     </header>

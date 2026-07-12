@@ -1,47 +1,42 @@
-import { simulateApiDelay } from "@/services/api"
+import { api, simulateApiDelay } from "@/services/api"
 import type { ResourceBooking } from "@/types/bookings"
-import { getBookingsDb, updateBookingsDb, createSystemNotification } from "./db"
+import { adaptBooking } from "./adapters"
 
 export const getBookings = async (): Promise<ResourceBooking[]> => {
   await simulateApiDelay()
-  return getBookingsDb()
+  const response = await api.get("/bookings")
+  if (response.data.success) {
+    return response.data.data.map(adaptBooking)
+  }
+  return []
 }
 
 export const createBooking = async (booking: Omit<ResourceBooking, "id" | "status">): Promise<ResourceBooking> => {
-  await simulateApiDelay()
-  const newBooking: ResourceBooking = {
-    ...booking,
-    id: "BK-" + (Math.round(Math.random() * 1000) + 2000).toString(),
-    status: "confirmed",
+  // Find assetId by name or use default 1
+  const assetsResponse = await api.get("/assets")
+  let assetId = 1
+  if (assetsResponse.data.success) {
+    const match = assetsResponse.data.data.find(
+      (a: any) => a.name.toLowerCase() === booking.resourceName.toLowerCase()
+    )
+    if (match) assetId = match.id
   }
 
-  const current = getBookingsDb()
-  updateBookingsDb([...current, newBooking])
+  // Create combined ISO date strings
+  const startDateStr = new Date(`${booking.date}T${booking.startTime}:00`).toISOString()
+  const endDateStr = new Date(`${booking.date}T${booking.endTime}:00`).toISOString()
 
-  // System notification
-  createSystemNotification(
-    `Resource Reserved: ${booking.resourceName}`,
-    `Reserved for ${booking.bookedBy} on ${booking.date} (${booking.startTime} - ${booking.endTime}).`,
-    "booking",
-    "low"
-  )
+  const response = await api.post("/bookings", {
+    assetId,
+    startDate: startDateStr,
+    endDate: endDateStr,
+    purpose: booking.purpose
+  })
 
-  return newBooking
+  return adaptBooking(response.data.data)
 }
 
 export const deleteBooking = async (bookingId: string): Promise<void> => {
-  await simulateApiDelay()
-  const current = getBookingsDb()
-  const match = current.find((b) => b.id === bookingId)
-  const filtered = current.filter((b) => b.id !== bookingId)
-  updateBookingsDb(filtered)
-
-  if (match) {
-    createSystemNotification(
-      `Resource Booking Cancelled: ${match.resourceName}`,
-      `Booking ${bookingId} on ${match.date} was cancelled.`,
-      "booking",
-      "low"
-    )
-  }
+  const bookingDbId = parseInt(bookingId.replace("BK-", ""))
+  await api.delete(`/bookings/${bookingDbId}`)
 }

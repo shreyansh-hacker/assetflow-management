@@ -16,7 +16,17 @@ import {
   AlertTriangle,
 } from "lucide-react"
 
-import { getDepartments, getEmployees, getCategories } from "@/services/organization"
+import {
+  getDepartments,
+  createDepartment,
+  updateDepartment,
+  deleteDepartment,
+  getEmployees,
+  createEmployee,
+  updateEmployee,
+  getCategories,
+  createCategory,
+} from "@/services/organization"
 import type { Department, Employee, AssetCategory } from "@/types/organization"
 import { useToast } from "@/hooks/useToast"
 
@@ -197,96 +207,106 @@ export default function Organization() {
   }
 
   // Save Forms Submissions
-  const onSaveDepartment = (values: z.infer<typeof departmentSchema>) => {
-    if (crudModal.type === "create") {
-      const newDept: Department = {
-        id: Math.round(Math.random() * 1000) + 100,
-        name: values.name,
-        code: values.code,
-        manager: values.manager,
-        employeesCount: 0,
-        costCenter: values.costCenter,
+  const onSaveDepartment = async (values: z.infer<typeof departmentSchema>) => {
+    try {
+      if (crudModal.type === "create") {
+        const created = await createDepartment(values.name)
+        setDepartments((prev) => [created, ...prev])
+        toast({
+          title: "Department Created",
+          description: `Successfully added department ${values.name}.`,
+          type: "success",
+        })
+      } else {
+        const updated = await updateDepartment(crudModal.targetId!, values.name)
+        setDepartments((prev) =>
+          prev.map((d) => (d.id === crudModal.targetId ? updated : d))
+        )
+        toast({
+          title: "Department Updated",
+          description: `Successfully modified details for ${values.name}.`,
+          type: "success",
+        })
       }
-      setDepartments((prev) => [newDept, ...prev])
+      setCrudModal({ isOpen: false, type: "create", tab: "departments" })
+    } catch (err: any) {
       toast({
-        title: "Department Created",
-        description: `Successfully added department ${values.name} (${values.code}).`,
-        type: "success",
-      })
-    } else {
-      setDepartments((prev) =>
-        prev.map((d) => (d.id === crudModal.targetId ? { ...d, ...values } : d))
-      )
-      toast({
-        title: "Department Updated",
-        description: `Successfully modified details for ${values.name}.`,
-        type: "success",
+        title: "Error",
+        description: err.response?.data?.message || err.message || "Failed to save department.",
+        type: "error",
       })
     }
-    setCrudModal({ isOpen: false, type: "create", tab: "departments" })
   }
 
-  const onSaveEmployee = (values: z.infer<typeof employeeSchema>) => {
-    if (crudModal.type === "create") {
-      const newEmp: Employee = {
-        id: Math.round(Math.random() * 1000) + 500,
-        name: values.name,
-        email: values.email,
-        department: values.department,
-        role: values.role,
-        activeAssets: 0,
-        joinedDate: new Date().toISOString().split("T")[0],
+  const onSaveEmployee = async (values: z.infer<typeof employeeSchema>) => {
+    try {
+      if (crudModal.type === "create") {
+        const created = await createEmployee({
+          name: values.name,
+          email: values.email,
+          department: values.department,
+          role: values.role
+        })
+        setEmployees((prev) => [created, ...prev])
+        toast({
+          title: "Employee Registered",
+          description: `${values.name} has been added to the employee folder directory.`,
+          type: "success",
+        })
+      } else {
+        const updated = await updateEmployee(crudModal.targetId!, {
+          name: values.name,
+          email: values.email,
+          department: values.department,
+          role: values.role
+        })
+        setEmployees((prev) =>
+          prev.map((e) => (e.id === crudModal.targetId ? updated : e))
+        )
+        toast({
+          title: "Employee Details Updated",
+          description: `Successfully saved data profiles for ${values.name}.`,
+          type: "success",
+        })
       }
-      setEmployees((prev) => [newEmp, ...prev])
-      // Increment headcount on matching department
-      setDepartments((prev) =>
-        prev.map((d) => (d.name === values.department ? { ...d, employeesCount: d.employeesCount + 1 } : d))
-      )
+      setCrudModal({ isOpen: false, type: "create", tab: "employees" })
+    } catch (err: any) {
       toast({
-        title: "Employee Registered",
-        description: `${values.name} has been added to the employee folder directory.`,
-        type: "success",
-      })
-    } else {
-      setEmployees((prev) =>
-        prev.map((e) => (e.id === crudModal.targetId ? { ...e, ...values } : e))
-      )
-      toast({
-        title: "Employee Details Updated",
-        description: `Successfully saved data profiles for ${values.name}.`,
-        type: "success",
+        title: "Error",
+        description: err.response?.data?.message || err.message || "Failed to save employee.",
+        type: "error",
       })
     }
-    setCrudModal({ isOpen: false, type: "create", tab: "employees" })
   }
 
-  const onSaveCategory = (values: z.infer<typeof categorySchema>) => {
-    if (crudModal.type === "create") {
-      const newCat: AssetCategory = {
-        id: Math.round(Math.random() * 1000) + 900,
-        name: values.name,
-        code: values.code,
-        description: values.description,
-        totalAssets: 0,
-        depreciationRate: values.depreciationRate,
+  const onSaveCategory = async (values: z.infer<typeof categorySchema>) => {
+    try {
+      if (crudModal.type === "create") {
+        const created = await createCategory(values.name)
+        setCategories((prev) => [created, ...prev])
+        toast({
+          title: "Category Registered",
+          description: `Asset classification ${values.name} created successfully.`,
+          type: "success",
+        })
+      } else {
+        setCategories((prev) =>
+          prev.map((c) => (c.id === crudModal.targetId ? { ...c, ...values } : c))
+        )
+        toast({
+          title: "Category Updated",
+          description: `Successfully modified ${values.name} classification configuration.`,
+          type: "success",
+        })
       }
-      setCategories((prev) => [newCat, ...prev])
+      setCrudModal({ isOpen: false, type: "create", tab: "categories" })
+    } catch (err: any) {
       toast({
-        title: "Category Registered",
-        description: `Asset classification ${values.name} created successfully.`,
-        type: "success",
-      })
-    } else {
-      setCategories((prev) =>
-        prev.map((c) => (c.id === crudModal.targetId ? { ...c, ...values } : c))
-      )
-      toast({
-        title: "Category Updated",
-        description: `Successfully modified ${values.name} classification configuration.`,
-        type: "success",
+        title: "Error",
+        description: err.response?.data?.message || err.message || "Failed to save category.",
+        type: "error",
       })
     }
-    setCrudModal({ isOpen: false, type: "create", tab: "categories" })
   }
 
   // Delete Action Confirm Trigger
@@ -294,38 +314,40 @@ export default function Organization() {
     setDeleteModal({ isOpen: true, tab, targetId: id, targetName: name })
   }
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     const { tab, targetId, targetName } = deleteModal
-    if (tab === "departments") {
-      setDepartments((prev) => prev.filter((d) => d.id !== targetId))
-      toast({
-        title: "Department Removed",
-        description: `${targetName} has been deleted successfully.`,
-        type: "success",
-      })
-    } else if (tab === "employees") {
-      const emp = employees.find((e) => e.id === targetId)
-      setEmployees((prev) => prev.filter((e) => e.id !== targetId))
-      // Decrement headcount on matching department
-      if (emp) {
-        setDepartments((prev) =>
-          prev.map((d) => (d.name === emp.department ? { ...d, employeesCount: Math.max(0, d.employeesCount - 1) } : d))
-        )
+    try {
+      if (tab === "departments") {
+        await deleteDepartment(targetId!)
+        setDepartments((prev) => prev.filter((d) => d.id !== targetId))
+        toast({
+          title: "Department Removed",
+          description: `${targetName} has been deleted successfully.`,
+          type: "success",
+        })
+      } else if (tab === "employees") {
+        setEmployees((prev) => prev.filter((e) => e.id !== targetId))
+        toast({
+          title: "Employee Removed",
+          description: `${targetName} is deleted from directory records.`,
+          type: "success",
+        })
+      } else if (tab === "categories") {
+        setCategories((prev) => prev.filter((c) => c.id !== targetId))
+        toast({
+          title: "Category Removed",
+          description: `${targetName} has been deleted successfully.`,
+          type: "success",
+        })
       }
+      setDeleteModal({ isOpen: false, tab: "departments" })
+    } catch (err: any) {
       toast({
-        title: "Employee Removed",
-        description: `${targetName} is deleted from directory records.`,
-        type: "success",
-      })
-    } else if (tab === "categories") {
-      setCategories((prev) => prev.filter((c) => c.id !== targetId))
-      toast({
-        title: "Category Deleted",
-        description: `Asset category classification ${targetName} was deleted.`,
-        type: "success",
+        title: "Deletion Failed",
+        description: err.response?.data?.message || err.message || "Cannot delete resource.",
+        type: "error",
       })
     }
-    setDeleteModal({ isOpen: false, tab: "departments" })
   }
 
   // Table Column Definitions

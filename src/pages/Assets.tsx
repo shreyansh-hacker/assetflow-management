@@ -24,7 +24,7 @@ import {
   ChevronRight,
 } from "lucide-react"
 
-import { getAssets, registerAsset } from "@/services/assets"
+import { getAssets, registerAsset, updateAsset, deleteAsset } from "@/services/assets"
 import { getDepartments } from "@/services/organization"
 import type { Asset, AssetStatusType, AssetWarrantyType } from "@/types/assets"
 import { useToast } from "@/hooks/useToast"
@@ -179,35 +179,55 @@ export default function Assets() {
   }
 
   // Bulk Actions
-  const handleBulkDelete = () => {
-    setAssets((prev) => prev.filter((asset) => !selectedAssetIds.includes(asset.id)))
-    toast({
-      title: "Bulk Action Success",
-      description: `Successfully deleted ${selectedAssetIds.length} assets from system index.`,
-      type: "success",
-    })
-    setSelectedAssetIds([])
+  const handleBulkDelete = async () => {
+    try {
+      await Promise.all(selectedAssetIds.map((id) => deleteAsset(id)))
+      setAssets((prev) => prev.filter((asset) => !selectedAssetIds.includes(asset.id)))
+      toast({
+        title: "Bulk Action Success",
+        description: `Successfully deleted ${selectedAssetIds.length} assets from system index.`,
+        type: "success",
+      })
+      setSelectedAssetIds([])
+    } catch (err: any) {
+      toast({
+        title: "Bulk Action Failed",
+        description: err.response?.data?.message || err.message || "Failed to delete assets.",
+        type: "error",
+      })
+    }
   }
 
-  const handleBulkScrap = () => {
-    setAssets((prev) =>
-      prev.map((asset) =>
-        selectedAssetIds.includes(asset.id)
-          ? {
-              ...asset,
-              status: "disposed" as AssetStatusType,
-              assignedTo: null,
-              depreciationValue: 0,
-            }
-          : asset
+  const handleBulkScrap = async () => {
+    try {
+      await Promise.all(
+        selectedAssetIds.map((id) => updateAsset(id, { status: "disposed" }))
       )
-    )
-    toast({
-      title: "Bulk Action Success",
-      description: `Successfully marked ${selectedAssetIds.length} assets as Disposed.`,
-      type: "success",
-    })
-    setSelectedAssetIds([])
+      setAssets((prev) =>
+        prev.map((asset) =>
+          selectedAssetIds.includes(asset.id)
+            ? {
+                ...asset,
+                status: "disposed" as any,
+                assignedTo: null,
+                depreciationValue: 0,
+              }
+            : asset
+        )
+      )
+      toast({
+        title: "Bulk Action Success",
+        description: `Successfully marked ${selectedAssetIds.length} assets as Disposed.`,
+        type: "success",
+      })
+      setSelectedAssetIds([])
+    } catch (err: any) {
+      toast({
+        title: "Bulk Action Failed",
+        description: err.response?.data?.message || err.message || "Failed to scrap assets.",
+        type: "error",
+      })
+    }
   }
 
   // Row Selection Toggle

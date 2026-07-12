@@ -18,6 +18,7 @@ import {
 } from "lucide-react"
 import { ROUTES } from "@/constants/routes"
 import { cn } from "@/utils/cn"
+import { useAuth } from "@/contexts/AuthContext"
 
 type SidebarProps = {
   isMobileOpen: boolean
@@ -26,24 +27,36 @@ type SidebarProps = {
 
 export default function Sidebar({ isMobileOpen, setIsMobileOpen }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false)
+  const { user } = useAuth()
 
-  const menuItems = [
+  const allMenuItems = [
     { name: "Dashboard", path: ROUTES.DASHBOARD, icon: LayoutDashboard },
-    { name: "Organization Setup", path: ROUTES.ORG_SETUP, icon: Building },
+    { name: "Organization Setup", path: ROUTES.ORG_SETUP, icon: Building, roles: ["Admin"] },
     { name: "Assets", path: ROUTES.ASSETS, icon: Package },
     { name: "Allocation", path: ROUTES.ALLOCATION, icon: ArrowLeftRight },
     { name: "Booking", path: ROUTES.BOOKING, icon: Calendar },
     { name: "Maintenance", path: ROUTES.MAINTENANCE, icon: Wrench },
-    { name: "Audit", path: ROUTES.AUDIT, icon: ClipboardCheck },
-    { name: "Reports", path: ROUTES.REPORTS, icon: BarChart3 },
+    { name: "Audit", path: ROUTES.AUDIT, icon: ClipboardCheck, roles: ["Admin", "Asset Manager"] },
+    { name: "Reports", path: ROUTES.REPORTS, icon: BarChart3, roles: ["Admin", "Asset Manager"] },
     { name: "Notifications", path: ROUTES.NOTIFICATIONS, icon: Bell },
     { name: "Settings", path: ROUTES.SETTINGS, icon: Settings },
   ]
+
+  // Filter items by role
+  const menuItems = allMenuItems.filter(item => {
+    if (!item.roles) return true
+    const userRole = user?.role || "Employee"
+    return item.roles.includes(userRole)
+  })
 
   const sidebarVariants = {
     expanded: { width: 260 },
     collapsed: { width: 72 },
   }
+
+  const userInitials = user?.name 
+    ? user.name.split(" ").map(n => n[0]).join("").toUpperCase().substring(0, 2)
+    : "US"
 
   const DesktopSidebar = (
     <motion.aside
@@ -130,14 +143,14 @@ export default function Sidebar({ isMobileOpen, setIsMobileOpen }: SidebarProps)
         <div className="p-4 border-t border-sidebar-border">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary text-sm shadow-sm uppercase">
-              AF
+              {userInitials}
             </div>
             <div className="flex flex-col overflow-hidden">
               <span className="text-xs font-semibold text-foreground truncate">
-                Enterprise Admin
+                {user?.name || "System User"}
               </span>
               <span className="text-[10px] text-muted-foreground truncate">
-                admin@assetflow.com
+                {user?.email || "user@assetflow.com"}
               </span>
             </div>
           </div>
@@ -209,14 +222,14 @@ export default function Sidebar({ isMobileOpen, setIsMobileOpen }: SidebarProps)
               <div className="p-4 border-t border-sidebar-border">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary text-sm shadow-sm uppercase">
-                    AF
+                    {userInitials}
                   </div>
                   <div className="flex flex-col">
                     <span className="text-xs font-semibold text-foreground">
-                      Enterprise Admin
+                      {user?.name || "System User"}
                     </span>
                     <span className="text-[10px] text-muted-foreground">
-                      admin@assetflow.com
+                      {user?.email || "user@assetflow.com"}
                     </span>
                   </div>
                 </div>
