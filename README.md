@@ -1,4 +1,4 @@
-# 🚀 AssetFlow Backend
+AssetFlow Backend
 
 <div align="center">
 
@@ -12,7 +12,7 @@ A production-ready backend built using **Node.js**, **Express.js**, **Prisma ORM
 
 ---
 
-# 📖 Table of Contents
+#  Table of Contents
 
 - Introduction
 - Project Overview
@@ -53,7 +53,7 @@ The system follows a **clean layered architecture**, ensuring scalability, maint
 
 ---
 
-# 🌍 Project Overview
+#  Project Overview
 
 Organizations often manage assets using spreadsheets or disconnected systems, making it difficult to track ownership, availability, maintenance, and utilization.
 
@@ -74,7 +74,7 @@ All operations are performed through secure REST APIs.
 
 ---
 
-# ❗ Problem Statement
+#  Problem Statement
 
 Large organizations face several challenges while managing enterprise assets.
 
@@ -95,7 +95,7 @@ Traditional spreadsheet-based management cannot efficiently handle thousands of 
 
 ---
 
-# 💡 Proposed Solution
+#  Proposed Solution
 
 AssetFlow provides a centralized backend system capable of managing the complete asset lifecycle.
 
@@ -116,7 +116,7 @@ Every operation follows predefined business rules to maintain data integrity.
 
 ---
 
-# 🎯 Objectives
+#  Objectives
 
 The primary objectives of the backend are:
 
@@ -133,7 +133,7 @@ The primary objectives of the backend are:
 
 ---
 
-# ⭐ Key Features
+#  Key Features
 
 ## Authentication
 
@@ -281,7 +281,7 @@ Each log stores:
 
 ---
 
-# 🏗 System Architecture
+#  System Architecture
 
 ```
 
@@ -329,7 +329,7 @@ Stores persistent enterprise data.
 
 ---
 
-# 📂 Project Structure
+#  Project Structure
 
 backend/
 │
@@ -357,7 +357,7 @@ backend/
 
 ---
 
-# 🔐 Authentication
+#  Authentication
 
 Authentication is implemented using JSON Web Tokens (JWT).
 
@@ -385,9 +385,9 @@ Passwords are encrypted using bcrypt before storing them in the database.
 
 ---
 
-# 👥 User Roles
+#  User Roles
 
-### 👑 Admin
+###  Admin
 
 - Complete system access
 - Manage users
@@ -397,7 +397,7 @@ Passwords are encrypted using bcrypt before storing them in the database.
 
 ---
 
-### 📦 Asset Manager
+###  Asset Manager
 
 - Create assets
 - Allocate assets
@@ -406,7 +406,7 @@ Passwords are encrypted using bcrypt before storing them in the database.
 
 ---
 
-### 🏢 Department Head
+###  Department Head
 
 - View department assets
 - Approve requests
@@ -414,7 +414,7 @@ Passwords are encrypted using bcrypt before storing them in the database.
 
 ---
 
-### 👤 Employee
+###  Employee
 
 - Book assets
 - View allocations
@@ -422,7 +422,7 @@ Passwords are encrypted using bcrypt before storing them in the database.
 
 ---
 
-# 🗄 Database Design
+#  Database Design
 
 The backend follows a normalized relational database design.
 
