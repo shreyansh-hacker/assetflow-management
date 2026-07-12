@@ -371,14 +371,7 @@ Backend API documentation is available in:
 ```
 backend/API_DOCS.md
 
-
-Example:
-
-```md
-![Dashboard](screenshots/dashboard.png)
-
----
-
+```
 # 🔮 Future Scope
 
 - QR Code Based Asset Tracking
@@ -401,4 +394,31 @@ This project was developed as part of the **Odoo Hackathon 2026** for educationa
 </div>
 
 
-<img width="1920" height="1080" alt="Screenshot 478" src="https://github.com/user-attachments/assets/34d1693c-ab24-45a7-9f0b-5038073e06d0" />
+
+## DASHBOARD 
+![alt text](public/WhatsApp%20Image%202026-07-12%20at%205.04.49%20PM.jpeg)
+
+![alt text](public/WhatsApp%20Image%202026-07-12%20at%205.05.21%20PM.jpeg)
+
+![alt text](public/WhatsApp%20Image%202026-07-12%20at%205.05.37%20PM.jpeg)
+
+![alt text](public/Screenshot%20(464).png)
+![alt text](public/Screenshot%20(465).png)
+![alt text](public/Screenshot%20(466).png)
+![alt text](public/Screenshot%20(467).png)
+![alt text](public/Screenshot%20(468).png)
+![alt text](public/Screenshot%20(469).png)
+![alt text](public/Screenshot%20(470).png)
+![alt text](public/Screenshot%20(471).png)
+![alt text](public/Screenshot%20(472).png)
+![alt text](public/Screenshot%20(473).png)
+![alt text](public/Screenshot%20(474).png)
+![alt text](public/Screenshot%20(475).png)
+![alt text](public/Screenshot%20(476).png)
+![alt text](public/Screenshot%20(477).png)
+![alt text](public/Screenshot%20(478).png)
+
+
+
+
+
