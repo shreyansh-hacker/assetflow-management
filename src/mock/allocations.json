@@ -1,0 +1,59 @@
+{
+  "transferRequests": [
+    {
+      "id": "TR-1001",
+      "assetId": "AST-0001",
+      "assetName": "MacBook Pro M3 Max",
+      "assetTag": "AF-LP-0043",
+      "currentHolder": "Shreyansh",
+      "currentDepartment": "Engineering",
+      "newHolder": "Sarah Jenkins",
+      "newDepartment": "Product & Design",
+      "reason": "Designing system UI layouts with higher GPU demands",
+      "expectedReturnDate": "2026-10-15",
+      "priority": "high",
+      "status": "pending",
+      "requestDate": "2026-07-11",
+      "notes": "Required for Figma animations and performance auditing."
+    },
+    {
+      "id": "TR-1002",
+      "assetId": "AST-0002",
+      "assetName": "Dell UltraSharp 32\" 4K Monitor",
+      "assetTag": "AF-MN-0081",
+      "currentHolder": "Sarah Jenkins",
+      "currentDepartment": "Product & Design",
+      "newHolder": "Alex Mercer",
+      "newDepartment": "Engineering",
+      "reason": "QA automation testing across multiple test windows",
+      "expectedReturnDate": "2026-09-01",
+      "priority": "medium",
+      "status": "approved",
+      "requestDate": "2026-07-09",
+      "notes": "Approved by Marcus Chen."
+    },
+    {
+      "id": "TR-1003",
+      "assetId": "AST-0006",
+      "assetName": "Figma Enterprise License Bundle",
+      "assetTag": "AF-SW-0050",
+      "currentHolder": "Sarah Jenkins",
+      "currentDepartment": "Product & Design",
+      "newHolder": "Jessica Taylor",
+      "newDepartment": "Sales & Marketing",
+      "reason": "Drafting pitch decks for enterprise clients",
+      "expectedReturnDate": "2026-08-30",
+      "priority": "low",
+      "status": "rejected",
+      "requestDate": "2026-07-05",
+      "notes": "Rejected because sales seats are managed separately under marketing pool."
+    }
+  ],
+  "history": [
+    { "id": "ah-1", "assetId": "AST-0001", "event": "Assigned", "from": "Inventory", "to": "Shreyansh", "date": "2024-03-16", "user": "Aarav Sharma" },
+    { "id": "ah-2", "assetId": "AST-0002", "event": "Assigned", "from": "Inventory", "to": "Sarah Jenkins", "date": "2023-01-12", "user": "Marcus Chen" },
+    { "id": "ah-3", "assetId": "AST-0003", "event": "Returned", "from": "Johnathan Miller", "to": "Inventory", "date": "2025-12-01", "user": "David Vance" },
+    { "id": "ah-4", "assetId": "AST-0004", "event": "Maintenance Transfer", "from": "Engineering Sandbox", "to": "Maintenance Lab", "date": "2026-07-11", "user": "Alex Mercer" },
+    { "id": "ah-5", "assetId": "AST-0002", "event": "Reassigned", "from": "Sarah Jenkins", "to": "Alex Mercer", "date": "2026-07-10", "user": "Marcus Chen" }
+  ]
+}

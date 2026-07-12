@@ -1,0 +1,67 @@
+[
+  {
+    "id": "BK-2001",
+    "resourceName": "Conference Room Alpha",
+    "resourceType": "Meeting Rooms",
+    "bookedBy": "Shreyansh",
+    "date": "2026-07-12",
+    "startTime": "09:00",
+    "endTime": "11:00",
+    "purpose": "Odoo Hackathon Prep & Layout Review",
+    "department": "Engineering",
+    "status": "confirmed",
+    "notes": "HDMI projector and whiteboards required."
+  },
+  {
+    "id": "BK-2002",
+    "resourceName": "Epson 4K Projector Pro",
+    "resourceType": "Projectors",
+    "bookedBy": "Sarah Jenkins",
+    "date": "2026-07-12",
+    "startTime": "10:30",
+    "endTime": "12:00",
+    "purpose": "UI Design walkthrough and micro-animations presentation",
+    "department": "Product & Design",
+    "status": "confirmed",
+    "notes": "Using wireless HDMI dongle."
+  },
+  {
+    "id": "BK-2003",
+    "resourceName": "Mobile Device Testing Kit #3",
+    "resourceType": "Testing Devices",
+    "bookedBy": "Alex Mercer",
+    "date": "2026-07-12",
+    "startTime": "14:00",
+    "endTime": "16:00",
+    "purpose": "QA automation compatibility runs",
+    "department": "Engineering",
+    "status": "confirmed",
+    "notes": "Need iOS 17 and Android 14 test sets."
+  },
+  {
+    "id": "BK-2004",
+    "resourceName": "Sony A7R V Camera Kit",
+    "resourceType": "Cameras",
+    "bookedBy": "Jessica Taylor",
+    "date": "2026-07-13",
+    "startTime": "11:00",
+    "endTime": "13:00",
+    "purpose": "Product photoshoot for promotional ads",
+    "department": "Sales & Marketing",
+    "status": "pending",
+    "notes": "Need the prime 85mm lens if available."
+  },
+  {
+    "id": "BK-2005",
+    "resourceName": "MacBook Pro Dev Kit #12",
+    "resourceType": "Laptops",
+    "bookedBy": "David Vance",
+    "date": "2026-07-14",
+    "startTime": "10:00",
+    "endTime": "12:00",
+    "purpose": "HR Onboarding session hardware run",
+    "department": "Human Resources",
+    "status": "confirmed",
+    "notes": "Standard employee orientation load."
+  }
+]
