@@ -408,49 +408,6 @@ This project was developed as part of the **Odoo Hackathon 2026** for educationa
 </div>
 
 
-# 📸 Dashboard Screenshots
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/b2f97bb0-bd97-43d9-aac8-643986f435b4" width="48%">
-  <img src="https://github.com/user-attachments/assets/ee4e800e-f33a-4ace-b7e6-3fb80d3526fa" width="48%">
-</p>
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/3a8f98bb-6e3c-4367-8fdf-d49f4f33cc5d" width="48%">
-  <img src="https://github.com/user-attachments/assets/29108351-fac9-4fc2-958c-4ab8a19cb9dc" width="48%">
-</p>
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/5c707b4e-f631-4b72-838f-932620f6bede" width="48%">
-  <img src="https://github.com/user-attachments/assets/6fbbf781-0a82-40cd-9efe-f0f5c9105c20" width="48%">
-</p>
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/4172f012-9b5d-4938-9e8b-5a5b53ea0a8c" width="48%">
-  <img src="https://github.com/user-attachments/assets/0360eb05-5407-4444-9cfd-324ae43f7334" width="48%">
-</p>
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/19462121-215d-491b-8b9b-dc7eaf0219e7" width="48%">
-  <img src="https://github.com/user-attachments/assets/b0927fa3-5423-4cd7-a7b6-d045be532677" width="48%">
-</p>
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/5e8e3981-cf20-4d48-ac6e-d77ca55793f9" width="48%">
-  <img src="https://github.com/user-attachments/assets/9f1e7d99-00e4-4cae-8142-e7ac99e334ed" width="48%">
-</p>
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/2cd6b5c8-3889-4fb5-a0e0-f8cb5b29e8ac" width="48%">
-  <img src="https://github.com/user-attachments/assets/ea3212d3-b39d-4f21-8efb-ba6be072d1d8" width="48%">
-</p>
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/a12e7d4e-bd3e-4989-b514-615d2d29ec9c" width="48%">
-  <img src="https://github.com/user-attachments/assets/73fdd378-9de6-4077-aed6-306b362825f2" width="48%">
-</p>
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/02f29f0a-90f6-4b1d-a973-1f8c983487ae" width="48%">
   <img src="https://github.com/user-attachments/assets/34d1693c-ab24-45a7-9f0b-5038073e06d0" width="48%">
 </p>
