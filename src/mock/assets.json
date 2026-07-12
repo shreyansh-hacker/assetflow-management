@@ -1,0 +1,173 @@
+[
+  {
+    "id": "AST-0001",
+    "name": "MacBook Pro M3 Max",
+    "tag": "AF-LP-0043",
+    "category": "IT Hardware",
+    "status": "allocated",
+    "department": "Engineering",
+    "assignedTo": {
+      "name": "Shreyansh",
+      "email": "shreyansh@assetflow.com"
+    },
+    "purchaseDate": "2024-03-15",
+    "purchasePrice": 3499,
+    "depreciationValue": 2449,
+    "depreciationRate": "20%/year",
+    "warrantyStatus": "active",
+    "warrantyExpiry": "2027-03-15",
+    "location": "HQ - Block A, Floor 3",
+    "vendor": "Apple Enterprise Sales",
+    "invoiceNumber": "INV-2024-0092",
+    "attachments": ["apple_invoice_0092.pdf", "warranty_agreement.pdf"],
+    "history": [
+      { "id": "h-1", "type": "allocation", "title": "Assigned to Shreyansh", "date": "2024-03-16", "user": "Aarav Sharma", "notes": "Initial setup completed." },
+      { "id": "h-2", "type": "maintenance", "title": "OS Update & Inspection", "date": "2025-01-20", "user": "System Admin", "notes": "Upgraded to macOS Sequoia. Clean health." },
+      { "id": "h-3", "type": "system", "title": "Asset Purchased & Registered", "date": "2024-03-15", "user": "Procurement Office", "notes": "Registered under cost center CC-101." }
+    ]
+  },
+  {
+    "id": "AST-0002",
+    "name": "Dell UltraSharp 32\" 4K Monitor",
+    "tag": "AF-MN-0081",
+    "category": "IT Hardware",
+    "status": "allocated",
+    "department": "Product & Design",
+    "assignedTo": {
+      "name": "Sarah Jenkins",
+      "email": "sarah.j@assetflow.com"
+    },
+    "purchaseDate": "2023-01-10",
+    "purchasePrice": 1099,
+    "depreciationValue": 659,
+    "depreciationRate": "20%/year",
+    "warrantyStatus": "active",
+    "warrantyExpiry": "2026-01-10",
+    "location": "HQ - Design Studio C",
+    "vendor": "Dell Corporate Partner",
+    "invoiceNumber": "INV-2023-1182",
+    "attachments": ["dell_invoice.pdf"],
+    "history": [
+      { "id": "h-4", "type": "allocation", "title": "Assigned to Sarah Jenkins", "date": "2023-01-12", "user": "Marcus Chen", "notes": "Delivered to HQ Block B." },
+      { "id": "h-5", "type": "maintenance", "title": "Logged Screen Flickering Issue", "date": "2026-07-12", "user": "Sarah Jenkins", "notes": "Intermittent flicker at 60Hz. Under review." },
+      { "id": "h-6", "type": "system", "title": "Asset Registered", "date": "2023-01-10", "user": "Procurement Office", "notes": "Cost Center CC-102." }
+    ]
+  },
+  {
+    "id": "AST-0003",
+    "name": "Herman Miller Aeron Chair",
+    "tag": "AF-FN-0129",
+    "category": "Office Furniture",
+    "status": "available",
+    "department": "Human Resources",
+    "assignedTo": null,
+    "purchaseDate": "2022-05-20",
+    "purchasePrice": 1499,
+    "depreciationValue": 899,
+    "depreciationRate": "10%/year",
+    "warrantyStatus": "active",
+    "warrantyExpiry": "2034-05-20",
+    "location": "HQ - Room 401",
+    "vendor": "Office Depot Contract",
+    "invoiceNumber": "INV-2022-4412",
+    "attachments": [],
+    "history": [
+      { "id": "h-7", "type": "allocation", "title": "Returned to Inventory", "date": "2025-12-01", "user": "David Vance", "notes": "Returned after employee offboarding." },
+      { "id": "h-8", "type": "allocation", "title": "Assigned to Johnathan Miller", "date": "2022-05-22", "user": "David Vance", "notes": "Assigned for remote office." }
+    ]
+  },
+  {
+    "id": "AST-0004",
+    "name": "Oculus Quest 3 512GB",
+    "tag": "AF-VR-0028",
+    "category": "Mobile Devices",
+    "status": "maintenance",
+    "department": "Engineering",
+    "assignedTo": null,
+    "purchaseDate": "2024-10-15",
+    "purchasePrice": 649,
+    "depreciationValue": 486,
+    "depreciationRate": "25%/year",
+    "warrantyStatus": "active",
+    "warrantyExpiry": "2025-10-15",
+    "location": "Tech Lab - Cabinet A",
+    "vendor": "BestBuy Business",
+    "invoiceNumber": "INV-2024-9981",
+    "attachments": ["bestbuy_receipt.pdf"],
+    "history": [
+      { "id": "h-9", "type": "maintenance", "title": "Sent to Maintenance Lab", "date": "2026-07-11", "user": "Alex Mercer", "notes": "Left controller drift and tracking sync loss." },
+      { "id": "h-10", "type": "allocation", "title": "Assigned to Engineering Dev Sandbox", "date": "2024-10-18", "user": "Aarav Sharma", "notes": "QA hardware check." }
+    ]
+  },
+  {
+    "id": "AST-0005",
+    "name": "Keysight DSOX2002A Oscilloscope",
+    "tag": "AF-LB-0088",
+    "category": "Lab Equipment",
+    "status": "available",
+    "department": "Engineering",
+    "assignedTo": null,
+    "purchaseDate": "2021-08-01",
+    "purchasePrice": 2240,
+    "depreciationValue": 1008,
+    "depreciationRate": "15%/year",
+    "warrantyStatus": "expired",
+    "warrantyExpiry": "2024-08-01",
+    "location": "Engineering Lab 2",
+    "vendor": "Keysight Technologies",
+    "invoiceNumber": "INV-2021-8890",
+    "attachments": ["keysight_spec_sheet.pdf", "calibration_cert_2025.pdf"],
+    "history": [
+      { "id": "h-11", "type": "maintenance", "title": "Calibration Certified", "date": "2025-08-05", "user": "External Lab Tech", "notes": "Calibration certified for 12 months. Certificate #CAL-9982." },
+      { "id": "h-12", "type": "system", "title": "Asset Purchased", "date": "2021-08-01", "user": "Procurement Office", "notes": "Keysight Technologies DSO Series." }
+    ]
+  },
+  {
+    "id": "AST-0006",
+    "name": "Figma Enterprise License Bundle",
+    "tag": "AF-SW-0050",
+    "category": "Software Licenses",
+    "status": "allocated",
+    "department": "Product & Design",
+    "assignedTo": {
+      "name": "Sarah Jenkins",
+      "email": "sarah.j@assetflow.com"
+    },
+    "purchaseDate": "2025-01-01",
+    "purchasePrice": 5400,
+    "depreciationValue": 5400,
+    "depreciationRate": "0%/year",
+    "warrantyStatus": "active",
+    "warrantyExpiry": "2027-01-01",
+    "location": "Cloud Subscription",
+    "vendor": "Figma Inc.",
+    "invoiceNumber": "INV-FIGMA-889",
+    "attachments": ["figma_sub_contract.pdf"],
+    "history": [
+      { "id": "h-13", "type": "allocation", "title": "Assigned Figma Seats", "date": "2025-01-01", "user": "Sarah Jenkins", "notes": "Figma Design seats allocated for 15 design profiles." }
+    ]
+  },
+  {
+    "id": "AST-0007",
+    "name": "iPhone 15 Pro Max 256GB",
+    "tag": "AF-PH-0402",
+    "category": "Mobile Devices",
+    "status": "disposed",
+    "department": "Sales & Marketing",
+    "assignedTo": null,
+    "purchaseDate": "2023-09-25",
+    "purchasePrice": 1199,
+    "depreciationValue": 0,
+    "depreciationRate": "25%/year",
+    "warrantyStatus": "expired",
+    "warrantyExpiry": "2024-09-25",
+    "location": "Scrapped / Recycled",
+    "vendor": "AT&T Business Store",
+    "invoiceNumber": "INV-ATT-0081",
+    "attachments": ["recycle_receipt_04.pdf"],
+    "history": [
+      { "id": "h-14", "type": "system", "title": "Asset Recycled & Scrapped", "date": "2025-11-20", "user": "Marcus Chen", "notes": "Device was run over by a forklift in loading dock. Scrapped under recycling code REC-889." },
+      { "id": "h-15", "type": "allocation", "title": "Assigned to Jessica Taylor", "date": "2023-09-27", "user": "David Vance", "notes": "Assigned to sales director." }
+    ]
+  }
+]

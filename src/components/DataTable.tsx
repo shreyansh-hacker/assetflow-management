@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import { cn } from "@/utils/cn"
 
 export interface Column<T> {
-  header: string
+  header: ReactNode
   accessor: keyof T | ((row: T) => ReactNode)
   className?: string
 }
