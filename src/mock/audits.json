@@ -1,0 +1,64 @@
+{
+  "activeAudit": {
+    "id": "AUD-2026-001",
+    "title": "Q3 Head Office Hardware & Desk Audit",
+    "status": "in_progress",
+    "auditor": "Marcus Chen (COO)",
+    "auditDate": "2026-07-12",
+    "totalAssets": 150,
+    "verifiedAssets": 112,
+    "progress": 75,
+    "missingAssets": [
+      {
+        "id": "AST-0003",
+        "name": "Herman Miller Aeron Chair",
+        "tag": "AF-FN-0129",
+        "expectedLocation": "HQ - Room 401",
+        "reportedMissingBy": "David Vance",
+        "dateLogged": "2026-07-12"
+      }
+    ],
+    "locationMismatches": [
+      {
+        "id": "AST-0001",
+        "name": "MacBook Pro M3 Max",
+        "tag": "AF-LP-0043",
+        "expectedLocation": "HQ - Block A, Floor 3",
+        "actualLocation": "HQ - Block B, Design Hub",
+        "holder": "Shreyansh",
+        "dateDetected": "2026-07-12"
+      },
+      {
+        "id": "AST-0004",
+        "name": "Oculus Quest 3 512GB",
+        "tag": "AF-VR-0028",
+        "expectedLocation": "Tech Lab - Cabinet A",
+        "actualLocation": "HQ - Block A, Floor 3",
+        "holder": "Alex Mercer",
+        "dateDetected": "2026-07-12"
+      }
+    ],
+    "checklist": [
+      { "id": "chk-1", "item": "Scan and verify all Engineering desks in Block A", "checked": true },
+      { "id": "chk-2", "item": "Calibrate core signal analyzers in Tech Lab 2", "checked": true },
+      { "id": "chk-3", "item": "Check and verify server rack serials in DC Block B", "checked": false },
+      { "id": "chk-4", "item": "Audit remote laptop signatures via VPN ping logs", "checked": true },
+      { "id": "chk-5", "item": "Verify disposal codes for recycled iPhone assets", "checked": false }
+    ]
+  },
+  "pastAudits": [
+    {
+      "id": "AUD-2026-002",
+      "title": "Annual Capital Assets & Software Compliance Audit",
+      "status": "completed",
+      "auditor": "Marcus Chen",
+      "auditDate": "2026-05-10",
+      "totalAssets": 210,
+      "verifiedAssets": 210,
+      "progress": 100,
+      "missingAssets": [],
+      "locationMismatches": [],
+      "checklist": []
+    }
+  ]
+}

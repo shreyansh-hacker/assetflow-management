@@ -1,0 +1,100 @@
+[
+  {
+    "id": "MNT-3001",
+    "assetId": "AST-0004",
+    "assetName": "Oculus Quest 3 512GB",
+    "assetTag": "AF-VR-0028",
+    "title": "Left Controller Drift & Sync Loss",
+    "description": "Joystick shows persistent hardware drift to the left. Occasional connection dropouts during calibration tests.",
+    "status": "in_progress",
+    "priority": "high",
+    "technician": {
+      "name": "Alex Mercer",
+      "email": "alex.m@assetflow.com"
+    },
+    "slaStatus": "within_sla",
+    "estimatedCost": 120,
+    "spareParts": ["Quest 3 Joystick Assembly", "Replacement Battery Contact"],
+    "comments": [
+      { "id": "c-1", "author": "Alex Mercer", "date": "2026-07-11", "text": "Disassembled the casing. Joystick potentiometer shows physical wear. Spare assembly ordered." },
+      { "id": "c-2", "author": "Aarav Sharma", "date": "2026-07-11", "text": "Please expedite. QA sandbox team is blocked without this VR set." }
+    ],
+    "attachments": ["diagnostic_log_af28.txt"],
+    "progress": 45,
+    "createdAt": "2026-07-11",
+    "updatedAt": "2026-07-12"
+  },
+  {
+    "id": "MNT-3002",
+    "assetId": "AST-0002",
+    "assetName": "Dell UltraSharp 32\" 4K Monitor",
+    "assetTag": "AF-MN-0081",
+    "title": "Flickering Display Panel",
+    "description": "Screen intermittently flickers or goes black for 1-2 seconds when connected via DisplayPort at 4K resolution.",
+    "status": "pending",
+    "priority": "medium",
+    "technician": {
+      "name": "System Admin",
+      "email": "admin@assetflow.com"
+    },
+    "slaStatus": "within_sla",
+    "estimatedCost": 75,
+    "spareParts": ["Premium DP 1.4 Cable"],
+    "comments": [
+      { "id": "c-3", "author": "Sarah Jenkins", "date": "2026-07-12", "text": "Checked with a different HDMI cable and it still flickers. Seems like a DP driver issue or panel connector." }
+    ],
+    "attachments": [],
+    "progress": 10,
+    "createdAt": "2026-07-12",
+    "updatedAt": "2026-07-12"
+  },
+  {
+    "id": "MNT-3003",
+    "assetId": "AST-0005",
+    "assetName": "Keysight DSOX2002A Oscilloscope",
+    "assetTag": "AF-LB-0088",
+    "title": "Annual Calibration & Recertification",
+    "description": "Standard annual lab validation checkup. Out of warranty, calibration certificate expired last week.",
+    "status": "testing",
+    "priority": "low",
+    "technician": {
+      "name": "External Lab Tech",
+      "email": "tech@externalcal.com"
+    },
+    "slaStatus": "within_sla",
+    "estimatedCost": 350,
+    "spareParts": [],
+    "comments": [
+      { "id": "c-4", "author": "External Lab Tech", "date": "2026-07-08", "text": "Running calibration parameters. Signals within 0.2% tolerance limits." }
+    ],
+    "attachments": ["calibration_draft_cert.pdf"],
+    "progress": 90,
+    "createdAt": "2026-07-05",
+    "updatedAt": "2026-07-10"
+  },
+  {
+    "id": "MNT-3004",
+    "assetId": "AST-0001",
+    "assetName": "MacBook Pro M3 Max",
+    "assetTag": "AF-LP-0043",
+    "title": "Battery Swelling Check",
+    "description": "Audit check: chassis base shows a slight bulge near center-left trackpad area.",
+    "status": "completed",
+    "priority": "critical",
+    "technician": {
+      "name": "Alex Mercer",
+      "email": "alex.m@assetflow.com"
+    },
+    "slaStatus": "sla_breached",
+    "estimatedCost": 280,
+    "spareParts": ["MacBook Pro 16\" Battery Pack", "Adhesive Strips"],
+    "comments": [
+      { "id": "c-5", "author": "Alex Mercer", "date": "2026-06-20", "text": "Battery swelling confirmed. Replaced battery module under emergency maintenance protocol. Re-glued and ran stress test." },
+      { "id": "c-6", "author": "Shreyansh", "date": "2026-06-22", "text": "Received laptop back. Battery health at 100%, bulge resolved. Excellent repair work." }
+    ],
+    "attachments": ["bulge_photo.jpg", "battery_health_report.pdf"],
+    "progress": 100,
+    "createdAt": "2026-06-18",
+    "updatedAt": "2026-06-22"
+  }
+]
