@@ -9,38 +9,6 @@ AssetFlow Backend
 A production-ready backend built using **Node.js**, **Express.js**, **Prisma ORM**, and **PostgreSQL/SQLite**, providing secure REST APIs for enterprise asset management with authentication, role-based access control, validation, notifications, activity logs, and complete asset lifecycle management.
 
 </div>
-
----
-
-#  Table of Contents
-
-- Introduction
-- Project Overview
-- Problem Statement
-- Solution
-- Objectives
-- Key Features
-- Technology Stack
-- System Architecture
-- Project Structure
-- Authentication & Authorization
-- User Roles
-- Core Modules
-- Database Design
-- Asset Lifecycle
-- Business Rules
-- REST APIs
-- Installation
-- Environment Variables
-- Prisma Setup
-- Running the Project
-- Security
-- Logging
-- Notifications
-- API Response Format
-- Future Enhancements
-- Contributors
-
 ---
 
 # 📌 Introduction
