@@ -1,10 +1,10 @@
 import { simulateApiDelay } from "@/services/api"
 import type { Asset } from "@/types/assets"
-import mockData from "@/mock/assets.json"
+import { getAssetsDb, updateAssetsDb } from "./db"
 
 export const getAssets = async (): Promise<Asset[]> => {
   await simulateApiDelay()
-  return mockData as Asset[]
+  return getAssetsDb()
 }
 
 export const registerAsset = async (asset: Omit<Asset, "history" | "attachments">): Promise<Asset> => {
@@ -14,7 +14,7 @@ export const registerAsset = async (asset: Omit<Asset, "history" | "attachments"
     attachments: [],
     history: [
       {
-        id: "h-new",
+        id: "h-" + Date.now().toString(),
         type: "system",
         title: "Asset Registered",
         date: new Date().toISOString().split("T")[0],
@@ -23,5 +23,7 @@ export const registerAsset = async (asset: Omit<Asset, "history" | "attachments"
       },
     ],
   }
+  const current = getAssetsDb()
+  updateAssetsDb([newAsset, ...current])
   return newAsset
 }

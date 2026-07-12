@@ -13,7 +13,7 @@ import {
   Activity,
 } from "lucide-react"
 
-import { getMaintenanceTickets, createMaintenanceTicket } from "@/services/maintenance"
+import { getMaintenanceTickets, createMaintenanceTicket, updateTicketStatus, addTicketComment } from "@/services/maintenance"
 import { getAssets } from "@/services/assets"
 import { getEmployees } from "@/services/organization"
 import type { MaintenanceTicket, MaintenanceStatusType, MaintenancePriorityType, SLALevelType } from "@/types/maintenance"
@@ -150,13 +150,15 @@ export default function Maintenance() {
   }
 
   // Update Status from Detail Drawer
-  const handleUpdateStatus = (ticketId: string, nextStatus: MaintenanceStatusType) => {
+  const handleUpdateStatus = async (ticketId: string, nextStatus: MaintenanceStatusType) => {
     const progressMap: Record<MaintenanceStatusType, number> = {
       pending: 10,
       in_progress: 45,
       testing: 80,
       completed: 100,
     }
+
+    await updateTicketStatus(ticketId, nextStatus, progressMap[nextStatus])
 
     setTickets((prev) =>
       prev.map((t) =>
@@ -191,8 +193,10 @@ export default function Maintenance() {
   }
 
   // Add Comment trigger
-  const handleAddComment = () => {
+  const handleAddComment = async () => {
     if (!selectedTicket || !commentText.trim()) return
+
+    await addTicketComment(selectedTicket.id, commentText)
 
     const newComment = {
       id: "c-" + Date.now().toString(),

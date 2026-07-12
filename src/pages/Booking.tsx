@@ -18,7 +18,7 @@ import {
   CalendarRange,
 } from "lucide-react"
 
-import { getBookings, createBooking } from "@/services/bookings"
+import { getBookings, createBooking, deleteBooking } from "@/services/bookings"
 import { getEmployees, getDepartments } from "@/services/organization"
 import type { ResourceBooking, ResourceType, BookingStatusType } from "@/types/bookings"
 import { useToast } from "@/hooks/useToast"
@@ -189,7 +189,8 @@ export default function Booking() {
   }
 
   // Cancel Booking
-  const handleCancelBooking = (bookingId: string) => {
+  const handleCancelBooking = async (bookingId: string) => {
+    await deleteBooking(bookingId)
     setBookings((prev) =>
       prev.map((b) => (b.id === bookingId ? { ...b, status: "cancelled" as BookingStatusType } : b))
     )

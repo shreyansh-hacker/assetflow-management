@@ -18,7 +18,7 @@ import {
 
 import { getAssets } from "@/services/assets"
 import { getDepartments, getEmployees } from "@/services/organization"
-import { getTransferRequests, createTransferRequest, getCustodyHistory } from "@/services/allocations"
+import { getTransferRequests, createTransferRequest, getCustodyHistory, approveTransfer, rejectTransfer } from "@/services/allocations"
 import type { Asset } from "@/types/assets"
 import type { TransferRequest, CustodyHistory, TransferPriorityType, TransferStatusType } from "@/types/allocations"
 import { useToast } from "@/hooks/useToast"
@@ -172,9 +172,11 @@ export default function Allocation() {
   }
 
   // Approve / Reject local action triggers
-  const handleApproveRequest = (requestId: string) => {
+  const handleApproveRequest = async (requestId: string) => {
     const request = transferRequests.find((r) => r.id === requestId)
     if (!request) return
+
+    await approveTransfer(requestId)
 
     // Update Request status
     setTransferRequests((prev) =>
@@ -214,7 +216,8 @@ export default function Allocation() {
     })
   }
 
-  const handleRejectRequest = (requestId: string) => {
+  const handleRejectRequest = async (requestId: string) => {
+    await rejectTransfer(requestId)
     setTransferRequests((prev) =>
       prev.map((r) => (r.id === requestId ? { ...r, status: "rejected" as TransferStatusType } : r))
     )

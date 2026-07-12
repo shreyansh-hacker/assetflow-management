@@ -12,9 +12,9 @@ import {
   Camera,
 } from "lucide-react"
 
-import { getActiveAudit } from "@/services/audits"
+import { getActiveAudit, toggleChecklistItem, resolveLocationMismatch, scanAndVerifyAsset } from "@/services/audits"
 import { getAssets } from "@/services/assets"
-import type { AuditRun, LocationMismatchEvent } from "@/types/audits"
+import type { AuditRun } from "@/types/audits"
 import { useToast } from "@/hooks/useToast"
 
 // Reusable components
@@ -68,8 +68,13 @@ export default function Audit() {
   }, [initialAudit])
 
   // Checklist Item Toggle
-  const handleToggleChecklist = (itemId: string) => {
+  const handleToggleChecklist = async (itemId: string) => {
     if (!audit) return
+    const targetItem = audit.checklist.find((item) => item.id === itemId)
+    if (!targetItem) return
+
+    await toggleChecklistItem(itemId, !targetItem.checked)
+
     const updatedChecklist = audit.checklist.map((item) =>
       item.id === itemId ? { ...item, checked: !item.checked } : item
     )
@@ -87,11 +92,13 @@ export default function Audit() {
   }
 
   // Resolve Location Mismatch (updates actual database state & clears discrepancy)
-  const handleResolveMismatch = (mismatchId: string) => {
+  const handleResolveMismatch = async (mismatchId: string) => {
     if (!audit) return
 
     const matched = audit.locationMismatches.find((m) => m.id === mismatchId)
     if (!matched) return
+
+    await resolveLocationMismatch(mismatchId)
 
     // Update checklist/counts
     const updatedMismatches = audit.locationMismatches.filter((m) => m.id !== mismatchId)
@@ -112,7 +119,7 @@ export default function Audit() {
   }
 
   // Trigger Mock QR Scan Verification
-  const handleSimulateScan = () => {
+  const handleSimulateScan = async () => {
     if (!audit || !scanAssetId) return
 
     const targetAsset = assets.find((a) => a.id === scanAssetId)
@@ -120,12 +127,12 @@ export default function Audit() {
 
     setIsScanOpen(false)
 
-    // Check if it already exists as mismatch or missing
+    // Check if it already exists as missing
     const isMissing = audit.missingAssets.some((m) => m.id === scanAssetId)
-    const isMismatch = audit.locationMismatches.some((m) => m.id === scanAssetId)
 
     if (isMissing) {
-      // Restore from missing
+      // Restore from missing (let's verify it)
+      const res = await scanAndVerifyAsset(scanAssetId)
       const updatedMissing = audit.missingAssets.filter((m) => m.id !== scanAssetId)
       const verifiedIncrement = audit.verifiedAssets + 1
       setAudit({
@@ -137,43 +144,24 @@ export default function Audit() {
 
       toast({
         title: "Asset Found & Verified",
-        description: `Verified "${targetAsset.name}" custody tag ${targetAsset.tag}. Removed from missing reports.`,
+        description: res.message,
         type: "success",
       })
       setScanAssetId("")
       return
     }
 
-    // Check location alignment (mock audit checks location)
-    // Let's check: if targetAsset is AST-0001, we know actualLocation is Block B, but expected was Block A.
-    // In our mock JSON, we have mismatch details. Let's trigger mismatch if expected != actual.
-    // For simplicity, let's say if scanned asset has a location different than Block A, we detect mismatch.
-    const isLocationMismatch = targetAsset.location.includes("Room") || targetAsset.location.includes("Cabinet")
-
-    if (isLocationMismatch && !isMismatch) {
-      // Add location mismatch discrepancy
-      const newMismatch: LocationMismatchEvent = {
-        id: targetAsset.id,
-        name: targetAsset.name,
-        tag: targetAsset.tag,
-        expectedLocation: "HQ - Block A, Floor 3",
-        actualLocation: targetAsset.location,
-        holder: targetAsset.assignedTo ? targetAsset.assignedTo.name : "Unassigned",
-        dateDetected: new Date().toISOString().split("T")[0],
-      }
-
-      setAudit({
-        ...audit,
-        locationMismatches: [newMismatch, ...audit.locationMismatches],
-      })
-
+    const res = await scanAndVerifyAsset(scanAssetId)
+    if (res.status === "mismatch") {
+      // Refresh active audit values to capture mismatch
+      const freshAudit = await getActiveAudit()
+      setAudit(freshAudit)
       toast({
         title: "Discrepancy Triggered",
-        description: `Scanned location mismatch for ${targetAsset.name}. Logged under exception reports.`,
+        description: res.message,
         type: "warning",
       })
     } else {
-      // Standard verification
       const verifiedIncrement = audit.verifiedAssets + 1
       setAudit({
         ...audit,
@@ -183,7 +171,7 @@ export default function Audit() {
 
       toast({
         title: "Asset Verified",
-        description: `Inventory tag ${targetAsset.tag} is verified at location "${targetAsset.location}".`,
+        description: res.message,
         type: "success",
       })
     }

@@ -1,5 +1,7 @@
 import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, Clock } from "lucide-react"
 import { cn } from "@/utils/cn"
+import { useQuery } from "@tanstack/react-query"
+import { getBookings } from "@/services/bookings"
 
 interface CalendarEvent {
   id: string
@@ -13,11 +15,23 @@ interface CalendarCardProps {
 }
 
 export default function CalendarCard({ className }: CalendarCardProps) {
-  // Static mock events scheduled for today (July 12, 2026)
+  const { data: bookings = [] } = useQuery({
+    queryKey: ["bookingsData"],
+    queryFn: getBookings,
+  })
+
+  // Static mock events + live bookings scheduled for today (July 12, 2026)
   const events: CalendarEvent[] = [
     { id: "e1", title: "Quarterly Audit - IT Equipment", time: "10:00 AM", type: "audit" },
-    { id: "e2", title: "Server Rack B fan replacement", time: "2:00 PM", type: "maintenance" },
-    { id: "e3", title: "Projector booking - Room C", time: "4:00 PM", type: "booking" },
+    { id: "e2", title: "Server Rack B fan replacement", time: "02:00 PM", type: "maintenance" },
+    ...bookings
+      .filter((b) => b.status === "confirmed" && b.date === "2026-07-12")
+      .map((b) => ({
+        id: b.id,
+        title: `${b.resourceName} Reservation`,
+        time: b.startTime,
+        type: "booking" as const,
+      })),
   ]
 
   // Calendar calculations

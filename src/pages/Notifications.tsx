@@ -12,7 +12,7 @@ import {
   Info,
 } from "lucide-react"
 
-import { getNotifications } from "@/services/notifications"
+import { getNotifications, markNotificationRead, markAllNotificationsRead } from "@/services/notifications"
 import type { NotificationItem, NotificationCategoryType } from "@/types/notifications"
 import { useToast } from "@/hooks/useToast"
 
@@ -55,14 +55,16 @@ export default function Notifications() {
   }, [initialNotifications])
 
   // Mark single as read
-  const handleMarkAsRead = (id: string) => {
+  const handleMarkAsRead = async (id: string) => {
+    await markNotificationRead(id)
     setNotifications((prev) =>
       prev.map((n) => (n.id === id ? { ...n, isRead: true } : n))
     )
   }
 
   // Mark all as read
-  const handleMarkAllRead = () => {
+  const handleMarkAllRead = async () => {
+    await markAllNotificationsRead()
     setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })))
     toast({
       title: "Inbox Cleared",

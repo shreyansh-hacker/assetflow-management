@@ -1,8 +1,8 @@
 import { simulateApiDelay } from "@/services/api"
 import type { DashboardData } from "@/types/dashboard"
-import mockData from "@/mock/dashboard.json"
+import { getDashboardStatsDb } from "./db"
 
 export const getDashboardData = async (): Promise<DashboardData> => {
   await simulateApiDelay()
-  return mockData as DashboardData
+  return getDashboardStatsDb() as DashboardData
 }
